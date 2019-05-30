@@ -9,6 +9,12 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>SRT Scheduler</title>
         <link rel="stylesheet" href="./css/bootstrap.css" />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+            integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+            crossorigin="anonymous"
+        />
     </head>
     <body>
         <div class="container mt-5 mb-5">
@@ -20,7 +26,7 @@
             <div class="card p-3">
                 <form id="process-form">
                     <fieldset>
-                        <legend>Processo</legend>
+                        <legend>Processos</legend>
                         <div class="form-group">
                             <label for="tempoChegada"
                                 >Tempo de Chegada</label
@@ -45,7 +51,7 @@
                         </div>
                         <button
                             type="submit"
-                            class="btn btn-primary float-right"
+                            class="btn btn-warning float-right"
                         >
                             Adicionar Processo
                         </button>
@@ -58,21 +64,23 @@
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Chegada</th>
-                            <th scope="col">Execução</th>
+                            <th scope="col">Tempo de Chegada</th>
+                            <th scope="col">Tempo de Execução</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row"></th>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
+                    <tbody id="listaDeProcessos"></tbody>
                 </table>
+            </div>
+
+            <div class="card p-3">
+                <button class="btn btn-danger">
+                    Iniciar Escalonamento
+                </button>
             </div>
         </div>
     </body>
+    <script src="./js/Interface.js"></script>
     <script src="./js/Fila.js"></script>
     <script src="./js/Processo.js"></script>
     <script>
@@ -96,12 +104,14 @@
 
                 totalDeProcessos++;
                 const id = totalDeProcessos;
-                const process = new Processo(
+                const processo = new Processo(
                     id,
                     tempoExecucao,
                     tempoChegada
                 );
                 // console.log(process);
+
+                Interface.adiciona(processo);
             });
 
         // console.log(totalDeProcessos);

@@ -1,8 +1,6 @@
 class Interface {
     static adiciona(processo) {
-        const listaDeProcessos = document.querySelector(
-            '#listaDeProcessos'
-        );
+        const listaDeProcessos = document.querySelector('#listaDeProcessos');
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${processo.id}</td>
@@ -30,5 +28,10 @@ class Interface {
         if (target.classList.contains('delete')) {
             target.parentElement.parentElement.remove();
         }
+    }
+
+    static clearFields() {
+        document.querySelector('#tempoChegada').value = '';
+        document.querySelector('#tempoExecucao').value = '';
     }
 }

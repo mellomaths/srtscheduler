@@ -14,8 +14,8 @@ document.querySelector('#process-form').addEventListener('submit', e => {
     const id = scheduler.totalDeProcessos() + 1;
     const processo = new Processo(id, tempoExecucao, tempoChegada);
     scheduler.adicionaProcesso(processo);
-
     Interface.adiciona(processo);
+    Interface.clearFields();
 });
 
 document.querySelector('#listaDeProcessos').addEventListener('click', e => {

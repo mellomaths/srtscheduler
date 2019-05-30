@@ -18,7 +18,7 @@
             </h2>
 
             <div class="card p-3">
-                <form>
+                <form id="process-form">
                     <fieldset>
                         <legend>Processo</legend>
                         <div class="form-group">
@@ -75,4 +75,35 @@
     </body>
     <script src="./js/Fila.js"></script>
     <script src="./js/Processo.js"></script>
+    <script>
+        var totalDeProcessos = 0;
+
+        document
+            .querySelector('#process-form')
+            .addEventListener('submit', e => {
+                e.preventDefault();
+
+                const tempoChegada = document.querySelector(
+                    '#tempoChegada'
+                ).value;
+                const tempoExecucao = document.querySelector(
+                    '#tempoExecucao'
+                ).value;
+
+                if (tempoChegada || tempoExecucao) {
+                    // show error
+                }
+
+                totalDeProcessos++;
+                const id = totalDeProcessos;
+                const process = new Processo(
+                    id,
+                    tempoExecucao,
+                    tempoChegada
+                );
+                // console.log(process);
+            });
+
+        // console.log(totalDeProcessos);
+    </script>
 </html>

@@ -1,9 +1,9 @@
 class Processo {
     constructor(id, tempoExecucao, tempoChegada) {
         this.id = id;
-        this.tempoExecucao = tempoExecucao;
-        this.tempoChegada = tempoChegada;
-        this.tempoRestante = tempoExecucao;
+        this.tempoExecucao = parseInt(tempoExecucao);
+        this.tempoChegada = parseInt(tempoChegada);
+        this.tempoRestante = this.tempoExecucao;
     }
 
     diminuiTempoRestante() {

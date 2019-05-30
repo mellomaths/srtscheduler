@@ -42,37 +42,37 @@ document.querySelector('#iniciarEscalonamento').addEventListener('click', e => {
         const div = document.createElement('div');
         div.classList.add('mt-2');
         div.innerHTML = `
-                <label for="progresso${processo.id}">Processo ${processo.id}</label>
-                <div class="progress" id="progresso${processo.id}">
-                    <div
-                        id="progresso${processo.id}-nonexisting"
-                        class="progress-bar progress-bar-striped progress-bar-animated"
-                        role="progressbar"
-                        style="width: 15%"
-                        aria-valuenow="15"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                    ></div>
-                    <div
-                        id="progresso${processo.id}-executing"
-                        class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                        role="progressbar"
-                        style="width: 30%"
-                        aria-valuenow="30"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                    ></div>
-                    <div
-                        id="progresso${processo.id}-stopped"
-                        class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                        role="progressbar"
-                        style="width: 20%"
-                        aria-valuenow="20"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                    ></div>
-                </div>
-            `;
+            <label for="progresso${processo.id}">Processo ${processo.id}</label>
+            <div class="progress" id="progresso${processo.id}">
+                <div
+                    id="progresso${processo.id}-nonexisting"
+                    class="progress-bar progress-bar-striped progress-bar-animated"
+                    role="progressbar"
+                    style="width: 15%"
+                    aria-valuenow="15"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                ></div>
+                <div
+                    id="progresso${processo.id}-executing"
+                    class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                    role="progressbar"
+                    style="width: 30%"
+                    aria-valuenow="30"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                ></div>
+                <div
+                    id="progresso${processo.id}-stopped"
+                    class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                    role="progressbar"
+                    style="width: 20%"
+                    aria-valuenow="20"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                ></div>
+            </div>
+        `;
         escalonamentoDiv.appendChild(div);
     }
 });

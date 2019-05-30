@@ -83,37 +83,5 @@
     <script src="./js/Interface.js"></script>
     <script src="./js/Fila.js"></script>
     <script src="./js/Processo.js"></script>
-    <script>
-        var totalDeProcessos = 0;
-
-        document
-            .querySelector('#process-form')
-            .addEventListener('submit', e => {
-                e.preventDefault();
-
-                const tempoChegada = document.querySelector(
-                    '#tempoChegada'
-                ).value;
-                const tempoExecucao = document.querySelector(
-                    '#tempoExecucao'
-                ).value;
-
-                if (tempoChegada || tempoExecucao) {
-                    // show error
-                }
-
-                totalDeProcessos++;
-                const id = totalDeProcessos;
-                const processo = new Processo(
-                    id,
-                    tempoExecucao,
-                    tempoChegada
-                );
-                // console.log(process);
-
-                Interface.adiciona(processo);
-            });
-
-        // console.log(totalDeProcessos);
-    </script>
+    <script src="./app.js"></script>
 </html>

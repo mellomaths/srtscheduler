@@ -1,4 +1,4 @@
-var totalDeProcessos = 0;
+const scheduler = new Scheduler();
 
 document.querySelector('#process-form').addEventListener('submit', e => {
     e.preventDefault();
@@ -11,9 +11,9 @@ document.querySelector('#process-form').addEventListener('submit', e => {
         return;
     }
 
-    totalDeProcessos++;
-    const id = totalDeProcessos;
+    const id = scheduler.totalDeProcessos() + 1;
     const processo = new Processo(id, tempoExecucao, tempoChegada);
+    scheduler.adicionaProcesso(processo);
 
     Interface.adiciona(processo);
 });

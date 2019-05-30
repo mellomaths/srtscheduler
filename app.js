@@ -18,28 +18,31 @@ document.querySelector('#process-form').addEventListener('submit', e => {
     Interface.adiciona(processo);
 });
 
-document
-    .querySelector('#listaDeProcessos')
-    .addEventListener('click', e => {
-        const id = e.target.parentElement.parentElement.parentElement.id;
-        Interface.deleta(e.target);
-        scheduler.removeProcesso(id);
-    });
+document.querySelector('#listaDeProcessos').addEventListener('click', e => {
+    const id = e.target.parentElement.parentElement.parentElement.id;
+    Interface.deleta(e.target);
+    scheduler.removeProcesso(id);
+});
 
-document
-    .querySelector('#iniciarEscalonamento')
-    .addEventListener('click', e => {
-        const escalonamentoDiv = document.querySelector(
-            '#cardEscalonamento'
-        );
-        for (let i = 0; i < scheduler.processos.length; i++) {
-            const processo = scheduler.processos[i];
-            const div = document.createElement('div');
-            div.classList.add('mt-2');
-            div.innerHTML = `
-                <label for="progresso${processo.id}">Processo ${
-                processo.id
-            }</label>
+document.querySelector('#iniciarEscalonamento').addEventListener('click', e => {
+    e.preventDefault();
+
+    // Disable Form Inputs
+    document.querySelector('#tempoChegada').disabled = true;
+    document.querySelector('#tempoExecucao').disabled = true;
+
+    // Disable Buttons in Form
+    document.querySelector('#iniciarEscalonamento').disabled = true;
+    document.querySelector('#adicionarProcesso').disabled = true;
+    document.querySelectorAll('.delete').forEach(btnDelete => (btnDelete.disabled = true));
+
+    const escalonamentoDiv = document.querySelector('#cardEscalonamento');
+    for (let i = 0; i < scheduler.processos.length; i++) {
+        const processo = scheduler.processos[i];
+        const div = document.createElement('div');
+        div.classList.add('mt-2');
+        div.innerHTML = `
+                <label for="progresso${processo.id}">Processo ${processo.id}</label>
                 <div class="progress" id="progresso${processo.id}">
                     <div
                         id="progresso${processo.id}-nonexisting"
@@ -70,6 +73,6 @@ document
                     ></div>
                 </div>
             `;
-            escalonamentoDiv.appendChild(div);
-        }
-    });
+        escalonamentoDiv.appendChild(div);
+    }
+});

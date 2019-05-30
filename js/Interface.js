@@ -12,4 +12,16 @@ class Interface {
         `;
         listaDeProcessos.appendChild(row);
     }
+
+    static showAlert(message, type) {
+        const div = document.createElement('div');
+        div.className = `alert alert-${type}`;
+        div.appendChild(document.createTextNode(message));
+        const container = document.querySelector('.container');
+        const form = document.querySelector('#form-card');
+        container.insertBefore(div, form);
+        setTimeout(() => {
+            document.querySelector('.alert').remove();
+        }, 3000);
+    }
 }

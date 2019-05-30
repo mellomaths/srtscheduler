@@ -14,6 +14,18 @@ class Scheduler {
         return this.processos.push(processo);
     }
 
+    removeProcesso(id) {
+        let processoIndice = 0;
+        for (let i = 0; i < this.processos.length; i++) {
+            let processo = this.processos[i];
+            if (processo.id == id) {
+                processoIndice = i;
+            }
+        }
+
+        return this.processos.splice(processoIndice, 1);
+    }
+
     buscaProcesso() {
         const fila = this.filaDeProntos.self();
         return fila.reduce((prev, current) => {

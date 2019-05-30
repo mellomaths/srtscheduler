@@ -8,8 +8,9 @@ class Interface {
             <td>${processo.id}</td>
             <td>${processo.tempoChegada}</td>
             <td>${processo.tempoExecucao}</td>
-            <td><button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button></td>
+            <td><button type="button" class="btn btn-danger btn-sm delete"><i class="far fa-trash-alt"></i></button></td>
         `;
+        row.id = processo.id;
         listaDeProcessos.appendChild(row);
     }
 
@@ -23,5 +24,11 @@ class Interface {
         setTimeout(() => {
             document.querySelector('.alert').remove();
         }, 3000);
+    }
+
+    static deleta(target) {
+        if (target.classList.contains('delete')) {
+            target.parentElement.parentElement.remove();
+        }
     }
 }

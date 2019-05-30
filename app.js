@@ -17,3 +17,12 @@ document.querySelector('#process-form').addEventListener('submit', e => {
 
     Interface.adiciona(processo);
 });
+
+document
+    .querySelector('#listaDeProcessos')
+    .addEventListener('click', event => {
+        const id =
+            event.target.parentElement.parentElement.parentElement.id;
+        Interface.deleta(event.target);
+        scheduler.removeProcesso(id);
+    });

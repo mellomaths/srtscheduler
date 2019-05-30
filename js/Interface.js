@@ -34,4 +34,48 @@ class Interface {
         document.querySelector('#tempoChegada').value = '';
         document.querySelector('#tempoExecucao').value = '';
     }
+
+    static createProgressBar(processId, type, valuenow = 0) {
+        let classList = 'progress-bar progress-bar-striped progress-bar-animated';
+        switch (type) {
+            case 'nonexisting':
+                break;
+            case 'executing':
+                classList += ' bg-success';
+                break;
+            case 'stopped':
+                classList += ' bg-danger';
+                break;
+        }
+
+        return `
+            <div
+                id="progresso${processId}-nonexisting"
+                class="${classList}"
+                role="progressbar"
+                style="width: ${valuenow}%"
+                aria-valuenow="${valuenow}"
+                aria-valuemin="0"
+                aria-valuemax="100"
+            ></div>
+        `;
+    }
+
+    static showProcessProgressBar(scheduler) {
+        const escalonamentoDiv = document.querySelector('#cardEscalonamento');
+        for (let i = 0; i < scheduler.processos.length; i++) {
+            const processo = scheduler.processos[i];
+            const div = document.createElement('div');
+            div.classList.add('mt-2');
+            div.innerHTML = `
+            <label for="progresso${processo.id}">Processo ${processo.id}</label>
+            <div class="progress" id="progresso${processo.id}">
+                ${Interface.createProgressBar(processo.id, 'nonexisting', 15)}
+                ${Interface.createProgressBar(processo.id, 'executing', 30)}
+                ${Interface.createProgressBar(processo.id, 'stopped', 20)}
+            </div>
+        `;
+            escalonamentoDiv.appendChild(div);
+        }
+    }
 }

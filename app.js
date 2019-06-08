@@ -26,17 +26,15 @@ document.querySelector('#listaDeProcessos').addEventListener('click', e => {
 
 document.querySelector('#iniciarEscalonamento').addEventListener('click', async e => {
     e.preventDefault();
+    Interface.resetScheduleApplication();
 
-    // Disable Form Inputs
-    document.querySelector('#tempoChegada').disabled = true;
-    document.querySelector('#tempoExecucao').disabled = true;
-
-    // Disable Buttons in Form
-    document.querySelector('#iniciarEscalonamento').disabled = true;
-    document.querySelector('#adicionarProcesso').disabled = true;
-    document.querySelectorAll('.delete').forEach(btnDelete => (btnDelete.disabled = true));
-
+    Interface.disableForm();
     Interface.showProcessProgressBar(scheduler);
 
     await scheduler.start();
+
+    Interface.clearProcessList();
+    Interface.enableForm();
+    Interface.changeStartScheduleButton();
+    scheduler.reset();
 });

@@ -6,6 +6,13 @@ class Scheduler {
         this.processoExecutando = null;
     }
 
+    reset() {
+        this.processos = [];
+        this.filaDeProntos = new Fila();
+        this.processosConcluidos = [];
+        this.processoExecutando = null;
+    }
+
     totalDeProcessos() {
         return this.processos.length;
     }

@@ -35,6 +35,44 @@ class Interface {
         document.querySelector('#tempoExecucao').value = '';
     }
 
+    static disableForm() {
+        // Disable Form Inputs
+        document.querySelector('#tempoChegada').disabled = true;
+        document.querySelector('#tempoExecucao').disabled = true;
+
+        // Disable Buttons in Form
+        document.querySelector('#iniciarEscalonamento').disabled = true;
+        document.querySelector('#adicionarProcesso').disabled = true;
+        document.querySelectorAll('.delete').forEach(btnDelete => (btnDelete.disabled = true));
+    }
+
+    static enableForm() {
+        // Disable Form Inputs
+        document.querySelector('#tempoChegada').disabled = false;
+        document.querySelector('#tempoExecucao').disabled = false;
+
+        // Disable Buttons in Form
+        document.querySelector('#iniciarEscalonamento').disabled = false;
+        document.querySelector('#adicionarProcesso').disabled = false;
+        document.querySelectorAll('.delete').forEach(btnDelete => (btnDelete.disabled = false));
+    }
+
+    static clearProcessList() {
+        const listaDeProcessos = document.querySelector('#listaDeProcessos');
+        listaDeProcessos.innerHTML = '';
+    }
+
+    static resetScheduleApplication() {
+        const progressosDiv = document.querySelector('#progressos');
+        progressosDiv.innerHTML = '';
+        const tempoLabel = document.querySelector(`#tempo-atual-execucao`);
+        tempoLabel.innerHTML = `Tempo: 0`;
+    }
+
+    static changeStartScheduleButton() {
+        document.querySelector('#iniciarEscalonamento').innerHTML = 'Iniciar Novo Escalonamento';
+    }
+
     static createProgressBar(processId, type, valuenow = 0) {
         let classList = 'progress-bar progress-bar-striped progress-bar-animated';
         switch (type) {
@@ -62,7 +100,7 @@ class Interface {
     }
 
     static showProcessProgressBar(scheduler) {
-        const escalonamentoDiv = document.querySelector('#cardEscalonamento');
+        const progressosDiv = document.querySelector('#progressos');
         for (let i = 0; i < scheduler.processos.length; i++) {
             const processo = scheduler.processos[i];
             const div = document.createElement('div');
@@ -74,7 +112,7 @@ class Interface {
             }</label>
                 <div class="progress" id="progresso${processo.id}"></div>
             `;
-            escalonamentoDiv.appendChild(div);
+            progressosDiv.appendChild(div);
         }
     }
 

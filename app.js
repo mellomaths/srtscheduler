@@ -26,6 +26,11 @@ document.querySelector('#listaDeProcessos').addEventListener('click', e => {
 
 document.querySelector('#iniciarEscalonamento').addEventListener('click', async e => {
     e.preventDefault();
+    if (scheduler.processos.length == 0) {
+        Interface.showAlert('Adicione pelo menos um processo antes de iniciar o escalonamento', 'info');
+        return;
+    }
+
     Interface.resetScheduleApplication();
 
     Interface.disableForm();

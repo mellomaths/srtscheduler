@@ -38,19 +38,19 @@ class Interface {
     static createProgressBar(processId, type, valuenow = 0) {
         let classList = 'progress-bar progress-bar-striped progress-bar-animated';
         switch (type) {
-            case 'nonexisting':
+            case 'Fora':
                 break;
-            case 'executing':
+            case 'Executando':
                 classList += ' bg-success';
                 break;
-            case 'stopped':
+            case 'Pronto':
                 classList += ' bg-danger';
                 break;
         }
 
         return `
             <div
-                id="progresso${processId}-nonexisting"
+                id="progresso${processId}-${type}"
                 class="${classList}"
                 role="progressbar"
                 style="width: ${valuenow}%"
@@ -68,14 +68,37 @@ class Interface {
             const div = document.createElement('div');
             div.classList.add('mt-2');
             div.innerHTML = `
-            <label for="progresso${processo.id}">Processo ${processo.id}</label>
-            <div class="progress" id="progresso${processo.id}">
-                ${Interface.createProgressBar(processo.id, 'nonexisting', 15)}
-                ${Interface.createProgressBar(processo.id, 'executing', 30)}
-                ${Interface.createProgressBar(processo.id, 'stopped', 20)}
-            </div>
-        `;
+                <label for="progresso${processo.id}">Processo ${processo.id}</label>
+                <div class="progress" id="progresso${processo.id}"></div>
+            `;
             escalonamentoDiv.appendChild(div);
+        }
+    }
+
+    static async updateProcessProgressBar(scheduler) {
+        let walk = scheduler.walkPercentage();
+        if (walk < 1) {
+            walk = 2;
+        }
+
+        for (let i = 0; i < scheduler.processos.length; i++) {
+            const process = scheduler.processos[i];
+            const progressDiv = document.querySelector(`#progresso${process.id}`);
+            if (!progressDiv.lastElementChild) {
+                console.log('Criou Progress bar');
+                console.log(process.status);
+                progressDiv.innerHTML = Interface.createProgressBar(process.id, process.status, walk);
+            } else {
+                const lastDivCreatedStatus = progressDiv.lastElementChild.id.split('-')[1];
+                console.log(lastDivCreatedStatus, process.status);
+                if (lastDivCreatedStatus == process.status) {
+                    walk = walk + walk;
+                    progressDiv.lastElementChild.style.width = `${walk}%`;
+                    progressDiv.lastElementChild.setAttribute('aria-valuenow', walk);
+                } else {
+                    progressDiv.innerHTML += Interface.createProgressBar(process.id, process.status, walk);
+                }
+            }
         }
     }
 }

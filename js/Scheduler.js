@@ -2,12 +2,25 @@ class Scheduler {
     constructor() {
         this.processos = [];
         this.filaDeProntos = new Fila();
-        this.processosProntos = [];
+        this.processosConcluidos = [];
         this.processoExecutando = null;
     }
 
     totalDeProcessos() {
         return this.processos.length;
+    }
+
+    totalTempoDeExecucao() {
+        let total = 0;
+        for (let i = 0; i < this.processos.length; i++) {
+            total += this.processos[i].tempoExecucao;
+        }
+
+        return total;
+    }
+
+    walkPercentage() {
+        return this.totalTempoDeExecucao() / 100;
     }
 
     adicionaProcesso(processo) {
@@ -28,7 +41,7 @@ class Scheduler {
 
     finalizaProcesso(processo) {
         processo.status = 'Concluído';
-        this.processosProntos.push(processo);
+        this.processosConcluidos.push(processo);
     }
 
     insereProcessoNaFilaDePronto(tempoAtualExecucao) {
@@ -48,38 +61,39 @@ class Scheduler {
     async start() {
         let tempoAtualExecucao = 0;
         console.log(this.processos);
-        while (this.processos.length !== this.processosProntos.length) {
+        while (this.processos.length !== this.processosConcluidos.length) {
             this.insereProcessoNaFilaDePronto(tempoAtualExecucao);
-            await this.sleep(5000);
-            console.log(tempoAtualExecucao);
-            console.log(this.filaDeProntos);
+            await this.sleep(2000);
+            await Interface.updateProcessProgressBar(this);
+            console.log('Escalonamento DEBUG - Tempo: ', tempoAtualExecucao);
+            console.log('Escalonamento DEBUG - Fila de Prontos: ', this.filaDeProntos);
 
             if (this.processoExecutando) {
                 this.processoExecutando.status = 'Pronto';
                 this.filaDeProntos.insere(this.processoExecutando);
             }
 
-            await this.sleep(2000);
-            console.log(this.filaDeProntos);
+            console.log('Escalonamento DEBUG - Fila de Prontos: ', this.filaDeProntos);
             this.processoExecutando = this.filaDeProntos.next();
-            console.log(this.processoExecutando);
+            console.log('Escalonamento DEBUG - Processo em execução: ', this.processoExecutando);
             if (!this.processoExecutando) {
                 tempoAtualExecucao++;
                 continue;
             }
+
             this.processoExecutando.status = 'Executando';
             this.processoExecutando.diminuiTempoRestante();
 
+            await Interface.updateProcessProgressBar(this);
             if (this.processoExecutando.tempoRestante == 0) {
                 this.finalizaProcesso(this.processoExecutando);
                 this.processoExecutando = null;
             }
 
             tempoAtualExecucao++;
-            await this.sleep(2000);
-            console.log(this.processos);
+            console.log('Escalonamento DEBUG - Processos: ', this.processos);
         }
         console.log('END');
-        console.log(this.processosProntos);
+        console.log(this.processosConcluidos);
     }
 }

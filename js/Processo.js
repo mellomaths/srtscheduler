@@ -3,7 +3,13 @@ class Processo {
         this.id = id;
         this.tempoExecucao = parseInt(tempoExecucao);
         this.tempoChegada = parseInt(tempoChegada);
-        this.tempoRestante = this.tempoExecucao;
+        this.tempoRestante = parseInt(tempoExecucao);
+        this.status = 'Fora';
+
+        /**
+         * Status:
+         * Fora, Pronto, Executando, Concluído
+         */
     }
 
     diminuiTempoRestante() {

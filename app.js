@@ -24,7 +24,7 @@ document.querySelector('#listaDeProcessos').addEventListener('click', e => {
     scheduler.removeProcesso(id);
 });
 
-document.querySelector('#iniciarEscalonamento').addEventListener('click', e => {
+document.querySelector('#iniciarEscalonamento').addEventListener('click', async e => {
     e.preventDefault();
 
     // Disable Form Inputs
@@ -37,4 +37,6 @@ document.querySelector('#iniciarEscalonamento').addEventListener('click', e => {
     document.querySelectorAll('.delete').forEach(btnDelete => (btnDelete.disabled = true));
 
     Interface.showProcessProgressBar(scheduler);
+
+    await scheduler.start();
 });

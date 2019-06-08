@@ -65,6 +65,8 @@ class Scheduler {
             this.insereProcessoNaFilaDePronto(tempoAtualExecucao);
             await this.sleep(2000);
             await Interface.updateProcessProgressBar(this);
+            await Interface.updateTempoAtualExecucao(tempoAtualExecucao);
+
             console.log('Escalonamento DEBUG - Tempo: ', tempoAtualExecucao);
             console.log('Escalonamento DEBUG - Fila de Prontos: ', this.filaDeProntos);
 
@@ -74,7 +76,9 @@ class Scheduler {
             }
 
             console.log('Escalonamento DEBUG - Fila de Prontos: ', this.filaDeProntos);
+
             this.processoExecutando = this.filaDeProntos.next();
+
             console.log('Escalonamento DEBUG - Processo em execução: ', this.processoExecutando);
             if (!this.processoExecutando) {
                 tempoAtualExecucao++;
@@ -85,6 +89,7 @@ class Scheduler {
             this.processoExecutando.diminuiTempoRestante();
 
             await Interface.updateProcessProgressBar(this);
+            await Interface.updateProcessStatus(this);
             if (this.processoExecutando.tempoRestante == 0) {
                 this.finalizaProcesso(this.processoExecutando);
                 this.processoExecutando = null;

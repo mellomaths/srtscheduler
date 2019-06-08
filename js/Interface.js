@@ -38,12 +38,12 @@ class Interface {
     static createProgressBar(processId, type, valuenow = 0) {
         let classList = 'progress-bar progress-bar-striped progress-bar-animated';
         switch (type) {
-            case 'Fora':
+            case 'Pronto':
                 break;
             case 'Executando':
                 classList += ' bg-success';
                 break;
-            case 'Pronto':
+            case 'Fora':
                 classList += ' bg-danger';
                 break;
         }
@@ -69,6 +69,9 @@ class Interface {
             div.classList.add('mt-2');
             div.innerHTML = `
                 <label for="progresso${processo.id}">Processo ${processo.id}</label>
+                <label class="float-right" id="status-${processo.id}">Status: ${processo.status}. Tempo Restante: ${
+                processo.tempoRestante
+            }</label>
                 <div class="progress" id="progresso${processo.id}"></div>
             `;
             escalonamentoDiv.appendChild(div);
@@ -83,6 +86,10 @@ class Interface {
 
         for (let i = 0; i < scheduler.processos.length; i++) {
             const process = scheduler.processos[i];
+            if (process.status == 'Concluído') {
+                continue;
+            }
+
             const progressDiv = document.querySelector(`#progresso${process.id}`);
             if (!progressDiv.lastElementChild) {
                 console.log('Criou Progress bar');
@@ -92,13 +99,26 @@ class Interface {
                 const lastDivCreatedStatus = progressDiv.lastElementChild.id.split('-')[1];
                 console.log(lastDivCreatedStatus, process.status);
                 if (lastDivCreatedStatus == process.status) {
-                    walk = walk + walk;
-                    progressDiv.lastElementChild.style.width = `${walk}%`;
-                    progressDiv.lastElementChild.setAttribute('aria-valuenow', walk);
+                    let valuenow = parseInt(progressDiv.lastElementChild.getAttribute('aria-valuenow'));
+                    progressDiv.lastElementChild.style.width = `${walk + valuenow}%`;
+                    progressDiv.lastElementChild.setAttribute('aria-valuenow', walk + valuenow);
                 } else {
                     progressDiv.innerHTML += Interface.createProgressBar(process.id, process.status, walk);
                 }
             }
         }
+    }
+
+    static async updateProcessStatus(scheduler) {
+        for (let i = 0; i < scheduler.processos.length; i++) {
+            const process = scheduler.processos[i];
+            const statusLabel = document.querySelector(`#status-${process.id}`);
+            statusLabel.innerHTML = `Status: ${process.status}. Tempo Restante: ${process.tempoRestante}`;
+        }
+    }
+
+    static async updateTempoAtualExecucao(tempo) {
+        const tempoLabel = document.querySelector(`#tempo-atual-execucao`);
+        tempoLabel.innerHTML = `Tempo: ${tempo}`;
     }
 }

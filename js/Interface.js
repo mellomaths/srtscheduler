@@ -119,6 +119,6 @@ class Interface {
 
     static async updateTempoAtualExecucao(tempo) {
         const tempoLabel = document.querySelector(`#tempo-atual-execucao`);
-        tempoLabel.innerHTML = `Tempo: ${tempo}`;
+        tempoLabel.innerHTML = `Tempo: ${tempo + 1}`;
     }
 }

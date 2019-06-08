@@ -89,15 +89,18 @@ class Scheduler {
             this.processoExecutando.diminuiTempoRestante();
 
             await Interface.updateProcessProgressBar(this);
-            await Interface.updateProcessStatus(this);
             if (this.processoExecutando.tempoRestante == 0) {
                 this.finalizaProcesso(this.processoExecutando);
                 this.processoExecutando = null;
             }
 
+            await Interface.updateProcessStatus(this);
+
             tempoAtualExecucao++;
             console.log('Escalonamento DEBUG - Processos: ', this.processos);
         }
+
+        await Interface.updateProcessStatus(this);
         console.log('END');
         console.log(this.processosConcluidos);
     }

@@ -11,7 +11,13 @@ document.querySelector('#process-form').addEventListener('submit', e => {
         return;
     }
 
-    const id = scheduler.totalDeProcessos() + 1;
+    const quantidadeDeProcessos = scheduler.processos.length;
+    let id = 1;
+    if (quantidadeDeProcessos > 0) {
+        const ultimoProcessoCriado = scheduler.processos[quantidadeDeProcessos - 1];
+        id = ultimoProcessoCriado.id + 1;
+    }
+
     const processo = new Processo(id, tempoExecucao, tempoChegada);
     scheduler.adicionaProcesso(processo);
     Interface.adiciona(processo);

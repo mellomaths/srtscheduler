@@ -40,6 +40,7 @@ class Scheduler {
             let processo = this.processos[i];
             if (processo.id == id) {
                 processoIndice = i;
+                break;
             }
         }
 

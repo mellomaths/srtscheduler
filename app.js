@@ -19,7 +19,7 @@ document.querySelector('#process-form').addEventListener('submit', e => {
 });
 
 document.querySelector('#listaDeProcessos').addEventListener('click', e => {
-    const id = e.target.parentElement.parentElement.parentElement.id;
+    const id = e.target.parentElement.parentElement.id;
     Interface.deleta(e.target);
     scheduler.removeProcesso(id);
 });
